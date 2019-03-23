@@ -27,7 +27,7 @@
 	<plugin name="cordova-plugin-inappbrowser" />
 	<plugin name="cordova-plugin-statusbar" />
 	<plugin name="cordova-plugin-whitelist" />
-	<plugin name="cordova-plugin-ad-admob" spec="1.0.112" />
+	<plugin name="cordova-plugin-ad-admob"/>
 	<engine name="ios" />
 	<engine name="android" />
 </widget>
