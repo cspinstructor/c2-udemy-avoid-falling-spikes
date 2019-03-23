@@ -13,7 +13,6 @@
 	<preference name="fullscreen" value="true" />
 	<preference name="DisallowOverscroll" value="true" />
 	<preference name="AllowInlineMediaPlayback" value="true" />
-	<preference name="phonegap-version" value="cli-8.0.0"/>
 
 	<config-file parent="UIStatusBarHidden" platform="ios" target="*-Info.plist"><true/></config-file>
 	<config-file parent="UIViewControllerBasedStatusBarAppearance" platform="ios" target="*-Info.plist"><false/></config-file>
@@ -24,12 +23,10 @@
 	<access origin="*" />
 
 	<plugin name="cordova-custom-config" />
-
 	<plugin name="cordova-plugin-inappbrowser" />
 	<plugin name="cordova-plugin-statusbar" />
 	<plugin name="cordova-plugin-whitelist" />
-	<plugin name="phonegap-admob" source="npm" />
-
+	<plugin name="cordova-plugin-admob-free"><variable name="ADMOB_APP_ID" value="ca-app-pub-5677932818243380~4893200771" /></plugin>
 
 	<engine name="ios" />
 	<engine name="android" />
