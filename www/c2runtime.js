@@ -22435,7 +22435,5 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.admob.prototype.acts.PreloadInterstitial,
 	cr.plugins_.admob.prototype.acts.PreloadBanner,
 	cr.plugins_.admob.prototype.cnds.OnBannerAdReceived,
-	cr.plugins_.admob.prototype.acts.ShowBanner,
-	cr.plugins_.admob.prototype.cnds.OnInterstitialReceived,
-	cr.plugins_.admob.prototype.acts.ShowInterstitial
+	cr.plugins_.admob.prototype.acts.ShowBanner
 ];};
