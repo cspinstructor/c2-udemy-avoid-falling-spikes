@@ -22348,6 +22348,7 @@ cr.getObjectRefTable = function () { return [
 	cr.system_object.prototype.acts.AddVar,
 	cr.plugins_.Sprite.prototype.cnds.IsOverlapping,
 	cr.plugins_.Sprite.prototype.acts.Destroy,
+	cr.system_object.prototype.cnds.TriggerOnce,
 	cr.plugins_.CordovaAdmobPro.prototype.acts.loadBanner,
 	cr.plugins_.Touch.prototype.cnds.OnTouchObject,
 	cr.system_object.prototype.acts.RestartLayout,
