@@ -22355,7 +22355,5 @@ cr.getObjectRefTable = function () { return [
 	cr.plugins_.Audio.prototype.acts.Play,
 	cr.system_object.prototype.acts.GoToLayout,
 	cr.system_object.prototype.cnds.IsGroupActive,
-	cr.plugins_.CordovaAdmobPro.prototype.acts.onlyLoadBanner,
-	cr.plugins_.CordovaAdmobPro.prototype.acts.loadInterstitial,
-	cr.plugins_.CordovaAdmobPro.prototype.acts.onlyLoadInterstitial
+	cr.plugins_.CordovaAdmobPro.prototype.acts.onlyLoadBanner
 ];};
