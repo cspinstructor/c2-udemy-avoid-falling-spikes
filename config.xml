@@ -27,7 +27,7 @@
 	<plugin name="cordova-plugin-inappbrowser" />
 	<plugin name="cordova-plugin-statusbar" />
 	<plugin name="cordova-plugin-whitelist" />
-	<plugin name="cordova-plugin-ad-admob-sdk" spec="https://github.com/maribor69/cordova-plugin-ad-admob.git"/> 
+	<plugin name="cordova-plugin-ad-admob-sdk" spec="https://github.com/mukeshphulwani66/admob-fixing-cordova.git"/> 
 
 
 	<engine name="ios" />
