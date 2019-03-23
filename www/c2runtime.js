@@ -19108,153 +19108,6 @@ cr.plugins_.Browser = function(runtime)
 }());
 ;
 ;
-cr.plugins_.CordovaAdmobPro = function(runtime)
-{
-	this.runtime = runtime;
-};
-(function ()
-{
-	var pluginProto = cr.plugins_.CordovaAdmobPro.prototype;
-	pluginProto.Type = function(plugin)
-	{
-		this.plugin = plugin;
-		this.runtime = plugin.runtime;
-	};
-	var typeProto = pluginProto.Type.prototype;
-	var admobid = {banner: "", interstitial: ""};
-	var isBannerShowing = false;
-	var isInterShowing = false;
-	var rewVidId = "";
-	var self;
-	typeProto.onCreate = function()
-	{
-	};
-	pluginProto.Instance = function(type)
-	{
-		this.type = type;
-		this.runtime = type.runtime;
-	};
-	var instanceProto = pluginProto.Instance.prototype;
-	instanceProto.onCreate = function()
-	{
-	self = this;
-	admobid = { banner: this.properties[0], interstitial: this.properties[1]};
-	rewVidId = this.properties[2];
-	document.addEventListener('onAdDismiss', function (data) {
-		if (data.adType == 'banner') {self.runtime.trigger(cr.plugins_.CordovaAdmobPro.prototype.cnds.onBannerAdDismissed, self); isBannerShowing=false;}
-		if (data.adType == 'interstitial') {self.runtime.trigger(cr.plugins_.CordovaAdmobPro.prototype.cnds.onInterstitialAdDismissed, self); isInterShowing=false;}
-		});
-	document.addEventListener('onAdLoaded', function (data) {
-		if (data.adType == 'banner') {self.runtime.trigger(cr.plugins_.CordovaAdmobPro.prototype.cnds.onBannerAdPreloaded, self);}
-		if (data.adType == 'interstitial') {self.runtime.trigger(cr.plugins_.CordovaAdmobPro.prototype.cnds.onInterstitialAdPreloaded, self);}
-		});
-	document.addEventListener('onAdFailLoad', function (data) {
-		if (data.adType == 'banner') {self.runtime.trigger(cr.plugins_.CordovaAdmobPro.prototype.cnds.onFailedBannerAd, self);}
-		if (data.adType == 'interstitial') {self.runtime.trigger(cr.plugins_.CordovaAdmobPro.prototype.cnds.onFailedInterstitialAd, self);}
-		});
-	document.addEventListener('onAdPresent', function (data) {
-		if (data.adType == 'banner') {isBannerShowing=true;}
-		if (data.adType == 'interstitial') {isInterShowing=true;}
-		});
-	};
-	function indexToSize(index) {
-		switch (index) {
-		case 0:		return "SMART_BANNER";
-		case 1:		return "BANNER";
-		case 2:		return "MEDIUM_RECTANGLE";
-		case 3:		return "FULL_BANNER";
-		case 4:		return "LEADERBOARD";
-		case 5:		return "SKYSCRAPER";
-		}
-	};
-	function indexToBoolean(index){
-		switch (index) {
-		case 0:		return true;
-		case 1:		return false;
-		}
-	}
-	function Cnds() {};
-	Cnds.prototype.onBannerAdDismissed = function ()
-	{
-		return true;
-	};
-	Cnds.prototype.onBannerAdpreloaded = function ()
-	{
-		return true;
-	};
-	Cnds.prototype.onFailedBannerAd = function ()
-	{
-		return true;
-	};
-	Cnds.prototype.isShowingBannerAd = function ()
-	{
-		return isBannerShowing;
-	};
-	Cnds.prototype.onInterstitialAdPreloaded = function ()
-	{
-		return true;
-	};
-	Cnds.prototype.onInterstitialAdDismissed = function ()
-	{
-		return true;
-	};
-	Cnds.prototype.onFailedInterstitialAd = function ()
-	{
-		return true;
-	};
-	Cnds.prototype.isShowingInterstitialAd = function ()
-	{
-		return isInterShowing;
-	};
-	pluginProto.cnds = new Cnds();
-	function Acts() {};
-	Acts.prototype.removeBanner = function ()
-	{
-		if (typeof window['AdMob'] == 'undefined') {return;}else{
-		window['AdMob'].removeBanner();}
-	}
-	Acts.prototype.loadBanner = function (pos, size, overlp, test)
-	{
-			if (typeof window['AdMob'] == 'undefined') {return;}else{
-		window['AdMob'].createBanner({adId: admobid.banner, adSize: indexToSize(size), position: pos+1, overlap: indexToBoolean(overlp), isTesting: indexToBoolean(test), autoShow: true});}
-	}
-	Acts.prototype.onlyLoadBanner = function (size, overlp, test)
-	{
-			if (typeof window['AdMob'] == 'undefined') {return;}else{
-			window['AdMob'].createBanner({adId: admobid.banner, adSize: indexToSize(size),
-			overlap: indexToBoolean(overlp), isTesting: indexToBoolean(test), autoShow: false});}
-	}
-	Acts.prototype.showBanner = function (pos)
-	{
-		if (typeof window['AdMob'] == 'undefined') {return;}else{
-		window['AdMob'].showBanner(pos+1);}
-	}
-	Acts.prototype.loadInterstitial = function (overlp, test)
-	{
-			if (typeof window['AdMob'] == 'undefined') {return;}else{
-			window['AdMob'].prepareInterstitial({adId: admobid.interstitial, isTesting: indexToBoolean(test), overlap: indexToBoolean(overlp), autoShow: true});}
-	}
-	Acts.prototype.onlyLoadInterstitial = function (overlp, test)
-	{
-			if (typeof window['AdMob'] == 'undefined') {return;}else{
-			window['AdMob'].prepareInterstitial({adId: admobid.interstitial, isTesting: indexToBoolean(test), overlap: indexToBoolean(overlp), autoShow: false});}
-	}
-	Acts.prototype.showInterstitial = function ()
-	{
-		if (typeof window['AdMob'] == 'undefined') {return;}else{
-		window['AdMob'].showInterstitial();}
-	}
-	Acts.prototype.loadShowRewVid = function (overlp, test)
-	{
-		if (typeof window['AdMob'] == 'undefined') {return;}else{
-		window['AdMob'].prepareRewardVideoAd({adId: rewVidId, isTesting: indexToBoolean(test), overlap: indexToBoolean(overlp), autoShow: true});}
-	}
-	pluginProto.acts = new Acts();
-	function Exps() {};
-	pluginProto.exps = new Exps();
-}());
-;
-;
 cr.plugins_.Sprite = function(runtime)
 {
 	this.runtime = runtime;
@@ -22317,10 +22170,235 @@ cr.plugins_.Touch = function(runtime)
 	};
 	pluginProto.exps = new Exps();
 }());
+/* Copyright (c) 2014 Intel Corporation. All rights reserved.
+* Use of this source code is governed by a MIT-style license that can be
+* found in the LICENSE file.
+*/
+;
+;
+cr.plugins_.admob = function(runtime)
+{
+	this.runtime = runtime;
+};
+(function ()
+{
+	var pluginProto = cr.plugins_.admob.prototype;
+	pluginProto.Type = function(plugin)
+	{
+		this.plugin = plugin;
+		this.runtime = plugin.runtime;
+	};
+	var typeProto = pluginProto.Type.prototype;
+	typeProto.onCreate = function()
+	{
+	};
+	pluginProto.Instance = function(type)
+	{
+		this.type = type;
+		this.runtime = type.runtime;
+	};
+	var instanceProto = pluginProto.Instance.prototype;
+	var isSupported = false;
+	instanceProto.onCreate = function()
+	{
+		if (!window["admob"])
+		{
+			cr.logexport("[Construct 2] com.cranberrygame.phonegap.plugin.ad.admob plugin is required to show Admob ads with Cordova; other platforms are not supported");
+			return;
+		}
+		isSupported = true;
+		this.AdMob = window["admob"];
+		if (this.AdMob["setLicenseKey"])
+			this.AdMob["setLicenseKey"]("support@scirra.com", "2ba99d4ff8c219cf7331c88fb3344f80");
+		var overlap = (this.properties[0] !== 0);
+		var isTesting = (this.properties[1] !== 0);
+		this.androidBannerId = this.properties[2];
+		this.androidInterstitialId = this.properties[3];
+		this.iosBannerId = this.properties[4];
+		this.iosInterstitialId = this.properties[5];
+		this.wp8BannerId = this.properties[6];
+		this.wp8InterstitialId = this.properties[7];
+		if (this.runtime.isAndroid)
+		{
+			this.bannerId = this.androidBannerId;
+			this.interstitialId = this.androidInterstitialId;
+		}
+		else if (this.runtime.isiOS)
+		{
+			this.bannerId = this.iosBannerId;
+			this.interstitialId = this.iosInterstitialId;
+		}
+		else if (this.runtime.isWindowsPhone8 || this.runtime.isWindowsPhone81)
+		{
+			this.bannerId = this.wp8BannerId;
+			this.interstitialId = this.wp8InterstitialId;
+		}
+		else
+		{
+			this.bannerId = "";
+			this.interstitialId = "";
+		}
+		this.isShowingBannerAd = false;
+		this.isShowingInterstitial = false;
+		this.AdMob["setUp"](this.bannerId, this.interstitialId, overlap, isTesting);
+		var self = this;
+		this.AdMob["onFullScreenAdLoaded"] = function ()
+		{
+			self.runtime.trigger(cr.plugins_.admob.prototype.cnds.OnInterstitialReceived, self);
+		};
+		this.AdMob["onInterstitialAdLoaded"] = function ()
+		{
+			self.runtime.trigger(cr.plugins_.admob.prototype.cnds.OnInterstitialReceived, self);
+		};
+		this.AdMob["onFullScreenAdShown"] = function ()
+		{
+			self.isShowingInterstitial = true;
+			self.runtime.trigger(cr.plugins_.admob.prototype.cnds.OnInterstitialPresented, self);
+		};
+		this.AdMob["onInterstitialAdShown"] = function ()
+		{
+			self.isShowingInterstitial = true;
+			self.runtime.trigger(cr.plugins_.admob.prototype.cnds.OnInterstitialPresented, self);
+		};
+		this.AdMob["onFullScreenAdClosed"] = function ()
+		{
+			self.isShowingInterstitial = false;
+			self.runtime.trigger(cr.plugins_.admob.prototype.cnds.OnInterstitialDismissed, self);
+		};
+		this.AdMob["onInterstitialAdHidden"] = function ()
+		{
+			self.isShowingInterstitial = false;
+			self.runtime.trigger(cr.plugins_.admob.prototype.cnds.OnInterstitialDismissed, self);
+		};
+		this.AdMob["onBannerAdPreloaded"] = function ()
+		{
+			self.runtime.trigger(cr.plugins_.admob.prototype.cnds.OnBannerAdReceived, self);
+		};
+	};
+	function indexToAdSize(i)
+	{
+		switch (i) {
+		case 0:		return "SMART_BANNER";
+		case 1:		return "BANNER";
+		case 2:		return "MEDIUM_RECTANGLE";
+		case 3:		return "FULL_BANNER";
+		case 4:		return "LEADERBOARD";
+		case 5:		return "SKYSCRAPER";
+		}
+		return "SMART_BANNER";
+	};
+	function indexToAdPosition(i)
+	{
+		switch (i) {
+		case 0:		return "top-left";
+		case 1:		return "top-center";
+		case 2:		return "top-right";
+		case 3:		return "left";
+		case 4:		return "center";
+		case 5:		return "right";
+		case 6:		return "bottom-left";
+		case 7:		return "bottom-center";
+		case 8:		return "bottom-right";
+		}
+		return "bottom-center";
+	};
+	function Cnds() {};
+	Cnds.prototype.IsShowingBanner = function()
+	{
+		return this.isShowingBannerAd;
+	};
+	Cnds.prototype.IsShowingInterstitial = function()
+	{
+		return this.isShowingInterstitial;
+	};
+	Cnds.prototype.OnInterstitialReceived = function()
+	{
+		return true;
+	};
+	Cnds.prototype.OnInterstitialPresented = function()
+	{
+		return true;
+	};
+	Cnds.prototype.OnInterstitialDismissed = function()
+	{
+		return true;
+	};
+	Cnds.prototype.OnBannerAdReceived = function()
+	{
+		return true;
+	};
+	pluginProto.cnds = new Cnds();
+	function Acts() {};
+	Acts.prototype.ShowBanner = function (pos_, size_)
+	{
+		if (!isSupported)
+			return;
+		this.AdMob["showBannerAd"](indexToAdPosition(pos_), indexToAdSize(size_));
+		this.isShowingBannerAd = true;
+	};
+	Acts.prototype.AutoShowInterstitial = function ()
+	{
+		if (!isSupported)
+			return;
+		if (this.AdMob["showInterstitialAd"])
+			this.AdMob["showInterstitialAd"]();
+		else if (this.AdMob["showFullScreenAd"])
+			this.AdMob["showFullScreenAd"]();
+	};
+	Acts.prototype.PreloadInterstitial = function ()
+	{
+		if (!isSupported)
+			return;
+		if (this.AdMob["preloadInterstitialAd"])
+			this.AdMob["preloadInterstitialAd"]();
+		else if (this.AdMob["preloadFullScreenAd"])
+			this.AdMob["preloadFullScreenAd"]();
+	};
+	Acts.prototype.ShowInterstitial = function ()
+	{
+		if (!isSupported)
+			return;
+		if (this.AdMob["showInterstitialAd"])
+			this.AdMob["showInterstitialAd"]();
+		else if (this.AdMob["showFullScreenAd"])
+			this.AdMob["showFullScreenAd"]();
+	};
+	Acts.prototype.HideBanner = function ()
+	{
+		if (!isSupported)
+			return;
+		this.AdMob["hideBannerAd"]();
+		this.isShowingBannerAd = false;
+	};
+	Acts.prototype.ReloadInterstitial = function ()
+	{
+		if (!isSupported)
+			return;
+		if (this.AdMob["reloadInterstitialAd"])
+			this.AdMob["reloadInterstitialAd"]();
+		else if (this.AdMob["reloadFullScreenAd"])
+			this.AdMob["reloadFullScreenAd"]();
+	};
+	Acts.prototype.ReloadBanner = function ()
+	{
+		if (!isSupported)
+			return;
+		this.AdMob["reloadBannerAd"]();
+	};
+	Acts.prototype.PreloadBanner = function ()
+	{
+		if (!isSupported)
+			return;
+		this.AdMob["preloadBannerAd"]();
+	};
+	pluginProto.acts = new Acts();
+	function Exps() {};
+	pluginProto.exps = new Exps();
+}());
 cr.getObjectRefTable = function () { return [
+	cr.plugins_.admob,
 	cr.plugins_.Audio,
 	cr.plugins_.Browser,
-	cr.plugins_.CordovaAdmobPro,
 	cr.plugins_.Sprite,
 	cr.plugins_.Text,
 	cr.plugins_.Touch,
@@ -22348,12 +22426,10 @@ cr.getObjectRefTable = function () { return [
 	cr.system_object.prototype.acts.AddVar,
 	cr.plugins_.Sprite.prototype.cnds.IsOverlapping,
 	cr.plugins_.Sprite.prototype.acts.Destroy,
-	cr.system_object.prototype.cnds.TriggerOnce,
-	cr.plugins_.CordovaAdmobPro.prototype.acts.loadBanner,
 	cr.plugins_.Touch.prototype.cnds.OnTouchObject,
 	cr.system_object.prototype.acts.RestartLayout,
 	cr.plugins_.Audio.prototype.acts.Play,
 	cr.system_object.prototype.acts.GoToLayout,
-	cr.system_object.prototype.cnds.IsGroupActive,
-	cr.plugins_.CordovaAdmobPro.prototype.acts.onlyLoadBanner
+	cr.plugins_.admob.prototype.acts.PreloadInterstitial,
+	cr.plugins_.admob.prototype.acts.ShowInterstitial
 ];};
