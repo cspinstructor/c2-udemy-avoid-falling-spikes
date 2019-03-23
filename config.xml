@@ -27,7 +27,7 @@
 	<plugin name="cordova-plugin-inappbrowser" />
 	<plugin name="cordova-plugin-statusbar" />
 
-	<gap:plugin name="cordova-plugin-ad-admob" source="npm" />
+	<plugin name="cordova-plugin-ad-admob" source="npm" />
 
 
 	<engine name="ios" />
