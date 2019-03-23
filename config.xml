@@ -23,10 +23,11 @@
 	<access origin="*" />
 
 	<plugin name="cordova-custom-config" />
-	<gap:plugin name="phonegap-admob" source="npm"/>
+
 	<plugin name="cordova-plugin-inappbrowser" />
 	<plugin name="cordova-plugin-statusbar" />
-
+	<plugin name="cordova-plugin-whitelist" />
+	<gap:plugin name="cordova-plugin-ad-admob" source="npm" />
 
 
 	<engine name="ios" />
