@@ -22348,13 +22348,13 @@ cr.getObjectRefTable = function () { return [
 	cr.system_object.prototype.acts.AddVar,
 	cr.plugins_.Sprite.prototype.cnds.IsOverlapping,
 	cr.plugins_.Sprite.prototype.acts.Destroy,
+	cr.plugins_.CordovaAdmobPro.prototype.acts.loadBanner,
 	cr.plugins_.Touch.prototype.cnds.OnTouchObject,
 	cr.system_object.prototype.acts.RestartLayout,
 	cr.plugins_.Audio.prototype.acts.Play,
 	cr.system_object.prototype.acts.GoToLayout,
 	cr.system_object.prototype.cnds.IsGroupActive,
 	cr.plugins_.CordovaAdmobPro.prototype.acts.onlyLoadBanner,
-	cr.plugins_.CordovaAdmobPro.prototype.acts.loadBanner,
 	cr.plugins_.CordovaAdmobPro.prototype.acts.loadInterstitial,
 	cr.plugins_.CordovaAdmobPro.prototype.acts.onlyLoadInterstitial
 ];};
